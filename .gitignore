@@ -1,0 +1,8 @@
+.*sw*
+*pyc
+venv
+node_modules
+dist
+.env
+*/data/
+/data/corpuses

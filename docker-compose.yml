@@ -1,0 +1,29 @@
+version: '2'
+
+services:
+  web:
+    build: ./web
+    volumes:
+      - ./web/src:/opt/web/journal/src
+    ports:
+      - "$WEB_PORT:$WEB_PORT"
+    env_file:
+      - .env
+    working_dir: /opt/web/journal
+    command: ["yarn", "run", "dev"]
+  backend:
+    build: ./backend
+    volumes:
+      - ./backend/src:/opt/tensorflow/syntaxnet/journal/src
+    env_file:
+      - .env
+    working_dir: /opt/tensorflow/syntaxnet/journal
+    command: ["./wait-for-it.sh", "$COUCHDB_URL", "--", "bazel", "run", "analysis"]
+  database:
+    image: kobretti/couchdb-cors
+    volumes:
+      - /tmp/couchdb:/usr/local/var/lib/couchdb
+    ports:
+      - "5984:5984"
+    env_file:
+      - .env
