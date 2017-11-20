@@ -29,7 +29,7 @@ function applyLabels({ text, labels }: Labels.Props){
 function Labels(props: Labels.Props){
   return (
     <p className="labeled">{applyLabels(props).map(({ topic, text }) =>
-      <span className={topic}>{text}</span>
+      <span className={topic || ''}>{text}</span>
     )}</p>
   )
 }

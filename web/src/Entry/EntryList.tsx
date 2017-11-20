@@ -18,8 +18,8 @@ function ListItem(entry: Entry.Props, index: number){
 
 class EntryList extends React.Component<EntryList.Props, {}> {
   append = () => {
-    let { date } = this.state
-    this.props.insert({ date, title: `Entry for ${date}`, text: '' })
+    //let { date } = this.state
+    //this.props.insert({ date, title: `Entry for ${date}`, text: '' })
   }
   render(){
     let { entries } = this.props
