@@ -11,6 +11,10 @@
     "types": [
       "webpack-env",
       "node"
+    ],
+    "typeRoots": [
+      "@types",
+      "./@types"
     ]
   }
 }
