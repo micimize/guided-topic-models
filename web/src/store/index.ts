@@ -1,43 +1,30 @@
-import { createStore, combineReducers, applyMiddleware, Middleware, Store, compose } from 'redux'
-import { persistStore, autoRehydrate } from 'redux-persist'
-import { REHYDRATE } from 'redux-persist/constants'
-import { actionCreators, rootReducer } from './dataFlow'
-import journalDataFlows, { fromJSON } from '../journal/dataFlows'
-import userDataFlows from '../user/dataFlows'
-import newPouchManager from './pouchManager'
+import { createStore, combineReducers, applyMiddleware, Action } from 'redux'
+import { logger } from './utils'
+import * as uuid from 'uuid'
+import { DataFlow } from '../Entry'
+import PouchMiddleware, { Path, Document } from 'pouch-redux-middleware'
 
+function localPlayground(){
+  return new PouchDB(
+    localStorage.getItem('playgroundDb') || (() => {
+      let _uuid = uuid()
+      localStorage.setItem('playgroundDb', _uuid)
+      return _uuid
+    })()
+  )
+}
 
-function logger(store) {
-  return function wrapDispatchToAddLogging(next) {
-    return function dispatchAndLog(action) {
-      console.log('dispatching', action)
-      let result = next(action)
-      console.log('next state', store.getState())
-      return result
-    }
-  }
+type DBActions = {
+  remove(doc: Document): Action
+  update(doc: Document): Action
+  insert(doc: Document): Action
 }
 
 export default function configureStore() {
-
-  let {
-    insertEntry,
-    batchInsertEntries,
-    updateEntry,
-    removeEntry,
-  } = actionCreators(journalDataFlows)
-
-  const pouchManager = newPouchManager({
+  const playground = PouchMiddleware({
     path: '/entries',
-    prefix: 'entry',
-    dbName: 'journal',
-    actions: {
-      insert: insertEntry,
-      batchInsert: batchInsertEntries,
-      update: updateEntry,
-      remove: removeEntry,
-    },
-    fromJSON
+    db: localPlayground(),
+    actions: DataFlow.actions as DBActions
   })
 
   const store = createStore(
@@ -46,10 +33,7 @@ export default function configureStore() {
       user: rootReducer({ initialState: {}, dataFlows: userDataFlows })
     }),
     undefined,
-    compose(
-      applyMiddleware(logger, pouchManager.connectIfLoggedIn),
-      autoRehydrate()
-    )
+    applyMiddleware(logger, playground),
   )
   persistStore(store)
   return store

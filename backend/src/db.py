@@ -28,6 +28,6 @@ def poller(feed="continuous", heartbeat="1000", include_docs=True, since='now', 
                 **kwargs)
         for change in changes:
             doc = change["doc"]
-            function(doc) 
+            function(doc, db) 
     return poll
 

@@ -2,8 +2,7 @@ import * as React from 'react'
 import Entry from './Entry'
 
 namespace EntryList {
-  export type Entry = Entry.Data
-  export type Data = Array<Entry>
+  export type Data = Array<Entry.Data>
   export type Props = {
     entries: Data
   }
