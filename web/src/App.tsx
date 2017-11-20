@@ -1,8 +1,20 @@
 import * as React from "react"
-import { EntryList } from "./Entry"
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 
-export default class App extends React.Component<{}, {}> {
+
+import { EntryList, DataFlow } from "./Entry"
+
+class App extends React.Component<EntryList.Props & { actions: typeof DataFlow.actions }, {}> {
     render() {
-        return <EntryList entries={[]}/>
+        return <div>
+            wow
+            <EntryList entries={this.props.entries}/>
+        </div>
     }
 }
+
+export default connect(
+  (s: EntryList.Props) => s,
+  dispatch => ({ actions: bindActionCreators(DataFlow.actions, dispatch) })
+)(App)

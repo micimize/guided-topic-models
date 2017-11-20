@@ -2,8 +2,8 @@ import { createStore, combineReducers, applyMiddleware, Action } from 'redux'
 import { logger } from './utils'
 import * as uuid from 'uuid'
 import { DataFlow } from '../Entry'
-import * as PouchDB from 'pouchdb'
 import PouchMiddleware, { Path, Document } from 'pouch-redux-middleware'
+import PouchDB from 'pouchdb'
 
 function localPlayground(){
   return new PouchDB(
@@ -26,12 +26,15 @@ export default function configureStore() {
     path: '/entries',
     db: localPlayground(),
     actions: DataFlow.actions as DBActions,
+    query: {
+    }
   })
 
   const store = createStore(
     combineReducers({
       entries: DataFlow.reducer
     }),
+    { entries: [] },
     applyMiddleware(logger, playground),
   )
   return store

@@ -1,7 +1,7 @@
 
 declare module 'pouch-redux-middleware' {
   import { Dispatch, Action, Middleware } from 'redux';
-  import * as PouchDB from 'pouchdb';
+  import PouchDB from 'pouchdb';
 
 
   export interface Document {

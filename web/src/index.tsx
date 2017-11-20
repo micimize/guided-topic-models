@@ -1,12 +1,19 @@
 import * as React from "react"
 import * as ReactDOM from "react-dom"
+import { Provider } from "react-redux"
 import { AppContainer } from "react-hot-loader"
 import App from "./App"
+
+import configureStore from "./store"
+
+let store = configureStore()
 
 const rootEl = document.getElementById("root")
 ReactDOM.render(
   <AppContainer>
-    <App />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </AppContainer>,
   rootEl
 )
@@ -17,7 +24,9 @@ if (module.hot) {
     const NextApp = require<{default: typeof App}>("./App").default
     ReactDOM.render(
       <AppContainer>
-        <NextApp />
+        <Provider store={store}>
+          <NextApp />
+        </Provider>
       </AppContainer>
       ,
       rootEl
