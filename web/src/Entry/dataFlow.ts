@@ -44,6 +44,7 @@ namespace DataFlow {
       case ActionType.Remove:
         return state.filter(e => payload._id !== e._id)
     }
+    return state
   }
 }
 

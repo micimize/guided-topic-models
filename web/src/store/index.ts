@@ -2,7 +2,7 @@ import { createStore, combineReducers, applyMiddleware, Action } from 'redux'
 import { logger } from './utils'
 import * as uuid from 'uuid'
 import { DataFlow } from '../Entry'
-import PouchMiddleware, { Path, Document } from 'pouch-redux-middleware'
+import * as PouchMiddleware from 'pouch-redux-middleware'
 import PouchDB from 'pouchdb'
 
 function localPlayground(){
@@ -16,9 +16,9 @@ function localPlayground(){
 }
 
 type DBActions = {
-  remove(doc: Document): Action
-  update(doc: Document): Action
-  insert(doc: Document): Action
+  remove(doc: PouchMiddleware.Document): Action
+  update(doc: PouchMiddleware.Document): Action
+  insert(doc: PouchMiddleware.Document): Action
 }
 
 export default function configureStore() {
@@ -34,7 +34,10 @@ export default function configureStore() {
     combineReducers({
       entries: DataFlow.reducer
     }),
-    { entries: [] },
+    { entries: [{
+      labels: [],
+      text: "foo biz bar"
+    }] },
     applyMiddleware(logger, playground),
   )
   return store

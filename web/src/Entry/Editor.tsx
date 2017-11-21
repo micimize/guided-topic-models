@@ -38,7 +38,7 @@ class Editor extends React.Component<Props, Props> {
     }
   }
 
-  edit({ target: { value: text }}: React.ChangeEvent<HTMLTextAreaElement>): void {
+  edit = ({ target: { value: text }}: React.ChangeEvent<HTMLTextAreaElement>): void => {
     this.setState({ text })
     this.state.onChange(text)
   }
