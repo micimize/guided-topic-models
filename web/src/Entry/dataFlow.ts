@@ -12,6 +12,7 @@ namespace DataFlow {
   export type State = EntryList.Data
 
   export enum ActionType {
+    BatchInsert = 'BATCH_INSERT_ENTRIES',
     Insert = 'INSERT_ENTRY',
     Update = 'UPDATE_ENTRY',
     Remove = 'REMOVE_ENTRY',
@@ -21,17 +22,20 @@ namespace DataFlow {
 
   export const actionCreators = DBCreators<Entry, typeof ActionType>(ActionType)
 
-  export function reducer(state: State = [], { type, payload }: Action): State {
-    switch (type) {
+  export function reducer(state: State = [], a: Action): State {
+    switch (a.type) {
+      case ActionType.BatchInsert:
+        return a.payload
       case ActionType.Insert:
-        return [...state, payload as Entry]
+        return [...state, a.payload as Entry]
       case ActionType.Update:
-        return state.map(e => e._id === payload._id ? { ...e, ...payload } : e)
+        return state.map(e => e._id === a.payload._id ? { ...e, ...a.payload } : e)
       case ActionType.Remove:
-        return state.filter(e => payload._id !== e._id)
+        return state.filter(e => a.payload._id !== e._id)
     }
     return state
   }
+
 }
 
 export default DataFlow

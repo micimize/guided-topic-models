@@ -10,12 +10,14 @@ function Creator<P, T extends string>(name: T): Creator<P, T> {
 }
 
 interface DBActionType {
-  Insert: string,
-  Update: string,
+  BatchInsert: string
+  Insert: string
+  Update: string
   Remove: string
 }
 
 type Wrapped<I> = (input: I) => void
+
 type Signatures<Doc extends object> = {
   insert: Wrapped<Doc>,
   update: Wrapped<Update<Doc>>,
@@ -23,12 +25,13 @@ type Signatures<Doc extends object> = {
 }
 
 type DBAction<Doc extends object, AT extends DBActionType> = 
+  | { type: AT['BatchInsert'], payload: Array<Full<Doc>> }
   | { type: AT['Insert'], payload: Doc }
   | { type: AT['Update'], payload: Update<Doc> }
   | { type: AT['Remove'], payload: Update<Doc> }
 
-
 type DBCreators<Doc extends object, As extends DBActionType> = {
+  batchInsert: Creator<Array<Full<Doc>>, As['BatchInsert']>,
   insert: Creator<Doc, As['Insert']>,
   update: Creator<Update<Doc>, As['Update']>,
   remove: Creator<Update<Doc>, As['Remove']>,
@@ -42,6 +45,9 @@ function isFull<Doc extends object>(doc: Doc): doc is Full<Doc> {
 function DBCreators<Doc extends object, AT extends DBActionType>(ActionType: AT): DBCreators<Doc, AT> {
   type U = Update<Doc>
   return {
+    batchInsert: (payload: Array<Full<Doc>>) => {
+      return { type: ActionType.BatchInsert, payload }
+    },
     insert: (doc: Doc) => {
       let payload: Full<Doc> = isFull(doc) ? doc : Object.assign({}, doc, { _id: uuid() })
       return { type: ActionType.Insert, payload }
@@ -51,4 +57,4 @@ function DBCreators<Doc extends object, AT extends DBActionType>(ActionType: AT)
   }
 }
 
-export { Update, Creator, DBActionType, DBAction, DBCreators, Signatures }
+export { Update, Full, Creator, DBActionType, DBAction, DBCreators, Signatures }
