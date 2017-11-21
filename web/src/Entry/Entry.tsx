@@ -4,13 +4,20 @@ import Labels from './Labels'
 
 namespace Entry {
   export type Data = Editor.Data & Labels.Data & { _id?: string }
-  export type Props = Editor.Props & Labels.Props
+
+  export type Props = Editor.Props &
+    Labels.Props &
+    {
+      _id?: string
+      update: (u: Partial<Data>) => void
+    }
 }
 
 class Entry extends React.Component<Entry.Props, {}> {
 
   render(){
-    let { labels, text, onChange } = this.props
+    let { _id, labels, text, update } = this.props
+    let onChange = (text: string) => update({ _id, text, labels })
     return (
       <div className="Entry">
         <Editor {...{ text, onChange }} />

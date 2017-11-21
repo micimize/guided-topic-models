@@ -6,9 +6,9 @@ import * as PouchMiddleware from 'pouch-redux-middleware'
 import PouchDB from 'pouchdb'
 
 function localPlayground(){
-  return new PouchDB(
+  return new PouchDB('http://admin:admin@127.0.0.1:5984/' +
     localStorage.getItem('playgroundDb') || (() => {
-      let _uuid = uuid()
+      let _uuid = 'playground-' + uuid()
       localStorage.setItem('playgroundDb', _uuid)
       return _uuid
     })()
@@ -25,7 +25,7 @@ export default function configureStore() {
   const playground = PouchMiddleware({
     path: '/entries',
     db: localPlayground(),
-    actions: DataFlow.actions as DBActions,
+    actions: DataFlow.actionCreators as DBActions,
     query: {
     }
   })
@@ -34,11 +34,8 @@ export default function configureStore() {
     combineReducers({
       entries: DataFlow.reducer
     }),
-    { entries: [{
-      labels: [],
-      text: "foo biz bar"
-    }] },
     applyMiddleware(logger, playground),
   )
+
   return store
 }

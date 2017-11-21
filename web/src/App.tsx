@@ -5,16 +5,16 @@ import { bindActionCreators } from 'redux'
 
 import { EntryList, DataFlow } from "./Entry"
 
-class App extends React.Component<EntryList.Props & { actions: typeof DataFlow.actions }, {}> {
+class App extends React.Component<EntryList.Props & { actions: typeof DataFlow.actionCreators }, {}> {
     render() {
         return <div>
             wow
-            <EntryList entries={this.props.entries}/>
+            <EntryList {...this.props}/>
         </div>
     }
 }
 
 export default connect(
   (s: EntryList.Props) => s,
-  dispatch => ({ actions: bindActionCreators(DataFlow.actions, dispatch) })
+  dispatch => ({ actions: bindActionCreators(DataFlow.actionCreators, dispatch) })
 )(App)
