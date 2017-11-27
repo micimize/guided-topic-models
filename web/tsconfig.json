@@ -6,7 +6,7 @@
     "strictNullChecks": true,
     "module": "commonjs",
     "target": "es5",
-    "jsx": "preserve",
+    "jsx": "react",
     "lib": ["es2017", "es7", "dom"],
     "types": [
       "webpack-env",
@@ -15,7 +15,6 @@
     "typeRoots": [
       "@types",
       "./@types"
-    ],
-    "allowSyntheticDefaultImports": true
+    ]
   }
 }

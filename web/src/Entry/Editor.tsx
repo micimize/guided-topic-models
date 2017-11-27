@@ -1,6 +1,5 @@
 import * as React from "react"
 import Textarea from "react-textarea-autosize"
-import "./editor.scss"
 
 function debounce<A>(func: (a: A) => void, wait: number) {
   let h: number
@@ -45,7 +44,7 @@ class Editor extends React.Component<Props, Props> {
   }
 
   render() {
-    return <div styleName='editor' >
+    return <div className='editor' >
       <Textarea value={this.state.text} onChange={this.edit} />
     </div>
   }
