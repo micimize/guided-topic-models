@@ -1,4 +1,4 @@
-from db import poller, save
+from db import poller, save, get_prefixed
 from debuffer import debuffer_changes
 from analysis.topics import sentence_topics
 
@@ -12,14 +12,6 @@ def defaults(doc):
 def raw_doc(row):
     return row["doc"]
 
-def get_prefixed(db, prefix: str):
-    return db.view('_all_docs',
-        include_docs=True,
-        wrapper=raw_doc,
-        startkey=prefix,
-        endkey=prefix + "\ufff0"
-    )
-    
 def analyze(doc, db):
     doc["@annotations"]["topics"] = sentence_topics(doc["text"], get_prefixed(db, 'topic/'))
     return doc

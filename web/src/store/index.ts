@@ -27,6 +27,7 @@ export default function configureStore() {
     db: localPlayground(),
     actions: DataFlow.actionCreators as DBActions,
     query: {
+      allDocs: { limit: 10 }
     }
   })
 

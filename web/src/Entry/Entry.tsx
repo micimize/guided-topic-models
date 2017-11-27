@@ -16,7 +16,7 @@ namespace Entry {
 class Entry extends React.Component<Entry.Props, {}> {
 
   render(){
-    let { _id, labels, text, update } = this.props
+    let { _id, labels = [], text, update } = this.props
     let onChange = (text: string) => update({ _id, text, labels })
     return (
       <div className="Entry">

@@ -3,10 +3,13 @@ import * as path from "path";
 import * as HtmlWebpackPlugin from 'html-webpack-plugin';
 
 const config: webpack.Configuration = {
+  context: path.resolve(__dirname, 'src'),
+
   entry: [
     "react-hot-loader/patch",
-    "./src/index.tsx",
+    "./index.tsx",
   ],
+
   output: {
     path: path.join(__dirname, 'dist'),
     filename: "bundle.js",
@@ -37,7 +40,8 @@ const config: webpack.Configuration = {
         test: /\.tsx?$/,
         loaders: [
           "react-hot-loader/webpack",
-          "awesome-typescript-loader"
+          "babel-loader",
+          "awesome-typescript-loader",
         ],
         exclude: path.resolve(__dirname, 'node_modules'),
         include: path.resolve(__dirname, "src"),
@@ -48,13 +52,18 @@ const config: webpack.Configuration = {
         test: /\.js$/,
         loader: "source-map-loader"
       },
+      {
+        test: /\.scss$/,
+        use: [
+          'style-loader',
+          'css-loader?importLoader=1&modules&localIdentName=[name]__[local]___[hash:base64:5]'
+        ]
+      }
     ]
   },
-
   devServer: {
     hot: true
   }
-
 };
 
 export default config;

@@ -5,7 +5,7 @@ def env(*suffixes):
 
 couch = couchdb.Server(*env("URL")) #)"http://%s:%s@%s/" % env("USERNAME", "PASSWORD", "URL"))
 
-def init_db(name="training"):
+def init_db(name):
     try:
         return couch[name]
     except couchdb.ResourceNotFound, e:
@@ -31,3 +31,11 @@ def poller(feed="continuous", heartbeat="1000", include_docs=True, since='now', 
             function(doc, db) 
     return poll
 
+def get_prefixed(db, prefix: str):
+    return db.view('_all_docs',
+        include_docs=True,
+        wrapper=raw_doc,
+        startkey=prefix,
+        endkey=prefix + "\ufff0"
+    )
+    
