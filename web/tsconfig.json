@@ -15,6 +15,7 @@
     "typeRoots": [
       "@types",
       "./@types"
-    ]
+    ],
+    "allowSyntheticDefaultImports": true
   }
 }
