@@ -1,48 +1,24 @@
 import * as React from 'react'
 import Entry from './Entry'
-import { Signatures } from '../store/actions'
+import { Link } from 'react-router-dom'
 
 namespace EntryList {
   export type Data = Array<Entry.Data>
   export type Props = {
     entries: Data
-    actions: Signatures<Entry.Data>
   }
 }
 
-type Props = EntryList.Props
-
-function ListItem(
-  { update, selected, select }:
-  { update: Props['actions']['update'], selected: number, select: (i: number) => void }
-){
-  return (entry: Entry.Props, index: number) => {
-    let E = <Entry update={update} {...entry} />
-    return selected == index ?
-        <li key={index} className='selected'>{ E }</li> :
-        <li key={index} onClick={_ => select(index)}>{ E }</li>
-  }
-}
-
-class EntryList extends React.Component<EntryList.Props, { selected: number }> {
-
-  state = { selected: -1 }
-
-  append = () => this.props.actions.insert({ labels: [], text: '' })
-
+class EntryList extends React.Component<EntryList.Props, {}> {
   render(){
-    let { entries, actions: { update } } = this.props
-    let selected = this.state.selected
-    let select = (index: number) =>
-      this.setState({ selected: index })
+    let entries = this.props.entries ? (this.props.entries as any).toJS() : []
     return (
       <ol className='entry-list'>
-        { entries.map(ListItem({ select, selected, update })) }
-        <li>
-          <div>
-            <button onClick={this.append}>+ new entry</button>
-          </div>
-        </li>
+        { entries.map((e: Entry.Props, i: number) =>
+          <li>
+            <Link to={`/${e._id || i}`}>{ e.text }</Link>
+          </li>
+        ) }
       </ol>
     )
   }

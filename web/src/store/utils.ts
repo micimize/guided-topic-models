@@ -4,6 +4,9 @@ const logger: Middleware =
   <S>({ getState }: MiddlewareAPI<S>) =>
     (next: Dispatch<S>) =>
       <A extends Action>(action: A): A => {
+        if((window as any).debugging){
+          debugger
+        }
         console.log('will dispatch', action)
 
         // Call the next dispatch method in the middleware chain.

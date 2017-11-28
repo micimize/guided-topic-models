@@ -1,20 +1,24 @@
 import * as React from "react"
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
+import { Provider } from "react-redux"
+import { Route } from 'react-router-dom'
+import { ConnectedRouter } from 'react-router-redux'
 
+import { EntryContainer, EntryListContainer } from "./store/connection"
+import configureStore, { history } from "./store/store"
 
-import { EntryList, DataFlow } from "./Entry"
+let store = configureStore()
 
-class App extends React.Component<EntryList.Props & { actions: typeof DataFlow.actionCreators }, {}> {
-    render() {
-        return <div>
-            wow
-            <EntryList {...this.props}/>
+function App() {
+  return (
+    <Provider store={store}>
+      <ConnectedRouter history={history}>
+        <div>
+          <EntryListContainer />
+          <Route path="/:id" component={EntryContainer} />
         </div>
-    }
+      </ConnectedRouter>
+    </Provider>
+  )
 }
 
-export default connect(
-  (s: EntryList.Props) => s,
-  dispatch => ({ actions: bindActionCreators(DataFlow.actionCreators, dispatch) })
-)(App)
+export default App

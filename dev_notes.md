@@ -15,8 +15,11 @@
     * topic annotation 
       - later specifying the topic of a sentence should autochange the topics
     * meta data view
-  * topic editor sidebar
+  * sidebar tabs
+    * topic editor 
+    * article list
   * list of documents
+  * react routes couple to db fetches, only get summary for sidebar
 * protocol
   * is `@meta` for required actions a good strategy?
   * `@meta` probably buffer necessary for not punching yourself in the face with changes

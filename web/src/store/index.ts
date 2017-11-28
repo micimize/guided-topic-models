@@ -1,19 +1,8 @@
 import { createStore, combineReducers, applyMiddleware, Action } from 'redux'
 import { logger } from './utils'
-import * as uuid from 'uuid'
 import { DataFlow } from '../Entry'
 import * as PouchMiddleware from 'pouch-redux-middleware'
-import PouchDB from 'pouchdb'
-
-function localPlayground(){
-  return new PouchDB('http://admin:admin@127.0.0.1:5984/' +
-    localStorage.getItem('playgroundDb') || (() => {
-      let _uuid = 'playground-' + uuid()
-      localStorage.setItem('playgroundDb', _uuid)
-      return _uuid
-    })()
-  )
-}
+import { localPlayground } from './db'
 
 type DBActions = {
   remove(doc: PouchMiddleware.Document): Action
