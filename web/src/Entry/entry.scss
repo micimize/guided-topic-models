@@ -6,7 +6,16 @@
     }
   }
 }
+.loader {
+  clear: both;
+}
 .entry-list {
+  position: fixed;
+  width: 350px;
+  top: 0;
+  bottom: 0;
+  height: 100%;
+  overflow: auto;
   li {
     list-style: none;
     padding: 0em 1.0em;

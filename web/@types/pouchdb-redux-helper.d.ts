@@ -14,5 +14,6 @@ declare module 'pouchdb-redux-helper' {
 
   export const containers: any;
   export const utils: any;
+  export const paginate: any;
 
 }
