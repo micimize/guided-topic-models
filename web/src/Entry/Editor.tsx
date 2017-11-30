@@ -47,7 +47,7 @@ class Editor extends React.Component<Props, Props> {
 
   render() {
     return <div className='editor' >
-      <Textarea value={this.state.text} onChange={this.edit} />
+      <Textarea value={this.props.text} onChange={this.edit} />
     </div>
   }
 }
