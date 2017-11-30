@@ -1,3 +1,7 @@
+/*
+    TODO
+    This entrie file is a hack. pouchdb-redux-helper should be forked and reworked
+*/
 import * as React from "react"
 import { connect } from "react-redux"
 import { parse } from 'query-string'
@@ -21,12 +25,14 @@ const reducers = {
 const singleItem = containers.connectSingleItem(
   entriesCrud,
   {},
-  (state: any) => ({
-    singleItemOpts: {docId: state.router.params.id},
+  (state: any, { match: { params } }: any) => ({
+    singleItemOpts: { docId: `${params.corpus}/${params.id}`},
   })
 )
 
-const EntryContainer = singleItem(Entry)
+const EntryContainer = singleItem(({ item, ...props }: Entry.Props & { item: any }) =>
+  <Entry {...props} {...item ? item.toJS() : {}} />
+)
 
 const EntryListContainer = paginate({},
   entriesCrud,

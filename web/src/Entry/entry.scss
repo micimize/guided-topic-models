@@ -1,4 +1,11 @@
-body, html { height: 100%; }
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+
+.content {
+  margin-left: 460px;
+}
 
 .entry {
   .editor {
@@ -11,8 +18,7 @@ body, html { height: 100%; }
 
 .sidebar {
   position: fixed;
-  width: 350px;
-  height: 100%;
+  width: 450px;
   top: 0;
   bottom: 0;
   overflow: auto;
@@ -22,7 +28,7 @@ body, html { height: 100%; }
 }
 
 .entry-list {
-
+  height: 100%;
   margin: 0em;
   padding-left: 0em;
   $even: rgb(241, 241, 241);

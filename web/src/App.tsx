@@ -14,7 +14,9 @@ function App() {
       <ConnectedRouter history={history}>
         <div>
           <EntryListContainer />
-          <Route path="/:id" component={EntryContainer} />
+          <div className='content'>
+            <Route path="/:corpus/:id" component={EntryContainer} />
+          </div>
         </div>
       </ConnectedRouter>
     </Provider>

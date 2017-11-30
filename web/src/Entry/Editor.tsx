@@ -33,7 +33,9 @@ class Editor extends React.Component<Props, Props> {
   }
 
   componentWillReceiveProps(next: Props) {
-    if( next.text != this.state.text ){
+    if (!this.state.text){
+      this.setState({ text: next.text })
+    } else if ( next.text != this.state.text ){
       this.state.onChange(this.state.text)
     }
   }

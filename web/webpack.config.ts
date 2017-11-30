@@ -10,6 +10,7 @@ const config: webpack.Configuration = {
   output: {
     path: path.join(__dirname, 'dist'),
     filename: "bundle.js",
+    publicPath: "/"
   },
 
   // Enable sourcemaps for debugging webpack's output.
@@ -68,7 +69,8 @@ const config: webpack.Configuration = {
   },
 
   devServer: {
-    hot: true
+    hot: true,
+    historyApiFallback: true
   }
 
 };

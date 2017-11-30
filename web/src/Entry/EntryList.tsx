@@ -31,9 +31,6 @@ class Scroll extends React.Component<any, {}> {
 }
 
 class EntryList extends React.Component<EntryList.Props & any, {}> {
-  componentWillUnmount(){
-    debugger;
-  }
   render(){
     let props = (this.props as any)
     let entries = props.entries ? props.entries : []
