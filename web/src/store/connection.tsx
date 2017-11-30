@@ -1,8 +1,7 @@
 import * as React from "react"
-import { Dispatch, bindActionCreators } from "redux"
 import { connect } from "react-redux"
 import { parse } from 'query-string'
-import { createCRUD, containers, paginate, utils } from 'pouchdb-redux-helper'
+import { createCRUD, containers, utils, paginate } from 'pouchdb-redux-helper'
 
 import { localPlayground } from './db'
 import Entry, { EntryList } from '../Entry'
@@ -29,27 +28,21 @@ const singleItem = containers.connectSingleItem(
 
 const EntryContainer = singleItem(Entry)
 
-const EntryListContainer = connect(
+const EntryListContainer = paginate({},
+  entriesCrud,
+  {
+    folder: 'all',
+    propName: 'items',
+  },
   (state: any) => {
-    let { start: startkey = '' } = parse(state.router.location.search || '')
+    let { startkey = '' } = state.router.location.state || {}
     return {
+      rowsPerPage: 10,
       startkey,
       location: state.router.location,
-      entries: Object.values(state.entries.get('documents').toJS()),
+      entries: Object.values(state.entries.get('documents').toJS())
     }
   }
-)(({ startkey, ...props }: any) => {
-  const Paginated = paginate({
-      rowsPerPage: 5,
-      startkey,
-    },
-    entriesCrud,
-    {
-      folder: 'all',
-      propName: 'items',
-    }
-  )(EntryList)
-  return <Paginated {...props}/>
-})
+)(EntryList)
 
 export { reducers, EntryListContainer, EntryContainer }

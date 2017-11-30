@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { replace } from 'react-router-redux'
 import InfiniteScroll  = require('react-infinite-scroller')
 import Entry from './Entry'
+(window as any).replace = replace
 
 namespace EntryList {
   export type Data = Array<Entry.Data>
@@ -13,42 +14,45 @@ namespace EntryList {
 
 class Scroll extends React.Component<any, {}> {
   render() {
-    let { location, next, dispatch, children } = this.props
-    let loadMore = next && location ?
-      () => dispatch(replace(`${location.pathname}?start=${next}`)) :
-      () => null;
-
+    let { location, next, dispatch, children, ...props } = this.props
     return (
       <InfiniteScroll
+        {...props}
         pageStart={0}
-        loadMore={loadMore}
+        loadMore={() => dispatch(replace({ state: { startkey: next } }))}
         hasMore={Boolean(next)}
         loader={<div className="loader">Loading ...</div>}
         useWindow={false}
       >
-        {children}
+        { children }
       </InfiniteScroll>
     )
   }
 }
 
 class EntryList extends React.Component<EntryList.Props & any, {}> {
+  componentWillUnmount(){
+    debugger;
+  }
   render(){
     let props = (this.props as any)
     let entries = props.entries ? props.entries : []
     const next = props.folderVars ?
       this.props.folderVars.get('next') :
       ''
+    let { location, dispatch } = this.props
     return (
-      <ol className='entry-list'>
-        <Scroll next={next} {...this.props}>
-          { entries.map((e: Entry.Props, i: number) =>
-            <li key={e._id || i} >
-              <Link to={`/${e._id || i}`}>{ e.text }</Link>
-            </li>
-          ) }
+      <div className='sidebar'>
+        <Scroll next={next} {...{ location, dispatch }} >
+          <ol className='entry-list'>
+            {entries.map((e: Entry.Props, i: number) =>
+              <li key={e._id || i} >
+                <Link to={`/${e._id || i}`}>{e.text}</Link>
+              </li>
+            )}
+          </ol>
         </Scroll>
-      </ol>
+      </div>
     )
   }
 }
