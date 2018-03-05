@@ -1,9 +1,8 @@
 import * as React from 'react'
 import { Link } from 'react-router-dom'
 import { replace } from 'react-router-redux'
-import InfiniteScroll  = require('react-infinite-scroller')
+import InfiniteScroll from 'react-infinite-scroller'
 import Entry from './Entry'
-(window as any).replace = replace
 
 namespace EntryList {
   export type Data = Array<Entry.Data>
@@ -12,7 +11,7 @@ namespace EntryList {
   }
 }
 
-class Scroll extends React.Component<any, {}> {
+class Scroll extends React.Component<EntryList.Props & any, {}> {
   render() {
     let { location, next, dispatch, children, ...props } = this.props
     return (
@@ -24,24 +23,24 @@ class Scroll extends React.Component<any, {}> {
         loader={<div className="loader">Loading ...</div>}
         useWindow={false}
       >
-        { children }
+        {children}
       </InfiniteScroll>
     )
   }
 }
 
 class EntryList extends React.Component<EntryList.Props & any, {}> {
-  render(){
-    let props = (this.props as any)
+  render() {
+    let props = this.props
     let entries = props.entries ? props.entries : []
-    const next = props.folderVars ?
-      this.props.folderVars.get('next') :
+    const next = ('folderVars' in props) ?
+      props.folderVars.get('next') :
       ''
-    let { location, dispatch } = this.props
+    let { location, dispatch } = this.props 
     return (
-      <div className='sidebar'>
+      <div className="sidebar">
         <Scroll next={next} {...{ location, dispatch }} >
-          <ol className='entry-list'>
+          <ol className="entry-list">
             {entries.map((e: Entry.Props, i: number) =>
               <li key={e._id || i} >
                 <Link to={`/${e._id || i}`}>{e.text}</Link>

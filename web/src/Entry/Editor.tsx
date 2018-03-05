@@ -1,5 +1,5 @@
-import * as React from "react"
-import Textarea from "react-textarea-autosize"
+import * as React from 'react'
+import Textarea from 'react-textarea-autosize'
 
 function debounce<A>(func: (a: A) => void, wait: number) {
   let h: number
@@ -22,7 +22,6 @@ type Props = Editor.Props
  * Presumptuously assumes that it's state is better than yours
  */
 class Editor extends React.Component<Props, Props> {
-
   constructor(props: Props) {
     super(props)
     let { text, onChange } = props
@@ -33,9 +32,9 @@ class Editor extends React.Component<Props, Props> {
   }
 
   componentWillReceiveProps(next: Props) {
-    if (!this.state.text){
+    if (!this.state.text) {
       this.setState({ text: next.text })
-    } else if ( next.text != this.state.text ){
+    } else if ( next.text !== this.state.text ) {
       this.state.onChange(this.state.text)
     }
   }
@@ -46,9 +45,11 @@ class Editor extends React.Component<Props, Props> {
   }
 
   render() {
-    return <div className='editor' >
-      <Textarea value={this.props.text} onChange={this.edit} />
-    </div>
+    return (
+      <div className="editor" >
+        <Textarea value={this.props.text} onChange={this.edit} />
+      </div>
+    )
   }
 }
 

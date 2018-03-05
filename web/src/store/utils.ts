@@ -4,7 +4,7 @@ const logger: Middleware =
   <S>({ getState }: MiddlewareAPI<S>) =>
     (next: Dispatch<S>) =>
       <A extends Action>(action: A): A => {
-        if((window as any).debugging){
+        if ((window as any).debugging) {
           debugger
         }
         console.log('will dispatch', action)
@@ -18,6 +18,5 @@ const logger: Middleware =
         // a middleware further in chain changed it.
         return returnValue
       }
-
 
 export { logger }

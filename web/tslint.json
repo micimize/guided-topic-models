@@ -1,6 +1,23 @@
 {
   "extends": ["tslint-react"],
   "rules": {
+      "semicolon": [false, "always"],
+      "no-shadowed-variable": false,
+      "switch-default": false,
+      "trailing-comma": [false],
+      "no-any": false,
+      "no-console": [
+          false,
+          "log",
+          "error",
+          "debug",
+          "info",
+          "time",
+          "timeEnd",
+          "trace"
+      ],
+      "no-debugger": false,
+
       "align": [
           true,
           "parameters",
@@ -29,26 +46,13 @@
           "static-before-instance",
           "variables-before-functions"
       ],
-      "no-any": true,
       "no-arg": true,
       "no-bitwise": true,
-      "no-console": [
-          true,
-          "log",
-          "error",
-          "debug",
-          "info",
-          "time",
-          "timeEnd",
-          "trace"
-      ],
       "no-consecutive-blank-lines": true,
       "no-construct": true,
-      "no-debugger": true,
       "no-duplicate-variable": true,
       "no-empty": true,
       "no-eval": true,
-      "no-shadowed-variable": true,
       "no-string-literal": true,
       "no-switch-case-fall-through": true,
       "no-trailing-whitespace": false,
@@ -63,10 +67,6 @@
       ],
       "quotemark": [true, "single", "jsx-double"],
       "radix": true,
-      "semicolon": [false, "always"],
-      "switch-default": true,
-
-      "trailing-comma": [false],
 
       "triple-equals": [ true, "allow-null-check" ],
       "typedef": [
