@@ -6,6 +6,9 @@ import { ConnectedRouter } from 'react-router-redux'
 import { EntryContainer, EntryListContainer } from "./store/connection"
 import configureStore, { history } from "./store/store"
 
+import Button from 'antd/lib/button'
+
+
 let store = configureStore()
 
 function App() {
@@ -13,6 +16,7 @@ function App() {
     <Provider store={store}>
       <ConnectedRouter history={history}>
         <div>
+        <Button type="primary">Button</Button>
           <EntryListContainer />
           <div className='content'>
             <Route path="/:corpus/:id" component={EntryContainer} />

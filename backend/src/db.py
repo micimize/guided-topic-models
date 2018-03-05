@@ -8,11 +8,11 @@ couch = couchdb.Server(*env("URL")) #)"http://%s:%s@%s/" % env("USERNAME", "PASS
 def init_db(name):
     try:
         return couch[name]
-    except couchdb.ResourceNotFound, e:
+    except couchdb.ResourceNotFound as e:
         couch.create(name)
         return couch[name]
 
-db = init_db()
+db = init_db('blei-lab-associated-press')
 
 def save(doc):
     _id, _rev = db.save(doc)

@@ -4,13 +4,12 @@ import os
 dir = os.path.dirname(__file__)
 
 DIMENSIONS = 300
-GLOVE_PATH = '../../data/glove.6B/glove.6B.%sd.text' % DIMENSIONS
+GLOVE_PATH = '../../data/glove.6B/glove.6B.%sd.txt' % DIMENSIONS
 
 word_vectors = KeyedVectors.load_word2vec_format(os.path.join(dir, GLOVE_PATH), binary=False)
 
 def similarity(tokens, includes=[], excludes=[]):
-    return word_vectors.n_similarity(tokens, includes) -
-        word_vectors.n_similarity(tokens, excludes)
+    return word_vectors.n_similarity(tokens, includes) - word_vectors.n_similarity(tokens, excludes)
 
 empty = {
   "title": "null",

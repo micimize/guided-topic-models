@@ -1,25 +1,10 @@
-import * as React from "react"
-import * as ReactDOM from "react-dom"
-import { AppContainer } from "react-hot-loader"
-import App from "./App"
+import * as React from 'react'
+import * as ReactDOM from 'react-dom'
+import App from './App'
+import registerServiceWorker from './registerServiceWorker'
 
-const rootEl = document.getElementById("root")
 ReactDOM.render(
-  <AppContainer>
-    <App />
-  </AppContainer>,
-  rootEl
-)
-
-// Hot Module Replacement API
-if (module.hot) {
-  module.hot.accept("./App", () => {
-    const NextApp = require<{default: typeof App}>("./App").default
-    ReactDOM.render(
-      <AppContainer>
-        <NextApp />
-      </AppContainer>,
-      rootEl
-    )
-  })
-}
+  <App />,
+  document.getElementById('root') as HTMLElement
+);
+registerServiceWorker()
