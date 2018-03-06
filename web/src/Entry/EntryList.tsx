@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { List, message, Spin } from 'antd';
 import { Link } from 'react-router-dom'
 import { replace } from 'react-router-redux'
 import InfiniteScroll from 'react-infinite-scroller'
@@ -20,7 +21,7 @@ class Scroll extends React.Component<EntryList.Props & any, {}> {
         pageStart={0}
         loadMore={() => dispatch(replace({ state: { startkey: next } }))}
         hasMore={Boolean(next)}
-        loader={<div className="loader">Loading ...</div>}
+        loader={<Spin className="loader" />}
         useWindow={false}
       >
         {children}
@@ -40,13 +41,15 @@ class EntryList extends React.Component<EntryList.Props & any, {}> {
     return (
       <div className="sidebar">
         <Scroll next={next} {...{ location, dispatch }} >
-          <ol className="entry-list">
-            {entries.map((e: Entry.Props, i: number) =>
-              <li key={e._id || i} >
-                <Link to={`/${e._id || i}`}>{e.text}</Link>
-              </li>
+          <List
+            className="entry-list"
+            dataSource={entries}
+            renderItem={(entry, index) => (
+              <List.Item key={entry._id || index}>
+                <Link to={`/${entry._id}`}>{entry.text}</Link>
+              </List.Item>
             )}
-          </ol>
+          />
         </Scroll>
       </div>
     )

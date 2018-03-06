@@ -1,6 +1,6 @@
 from db import poller, save, get_prefixed
 from debuffer import debuffer_changes
-from analysis.topics import sentence_topics
+from analysis import analyze
 
 def defaults(doc):
     if not doc.has_key("text"):
@@ -12,13 +12,9 @@ def defaults(doc):
 def raw_doc(row):
     return row["doc"]
 
-def analyze(doc, db):
-    doc["@annotations"]["topics"] = sentence_topics(doc["text"], get_prefixed(db, 'topic/'))
-    return doc
-
 def process_changes(doc, db):
     doc = defaults(doc)
-    doc = analyze(doc, db)
+    doc = analyze(doc, get_prefixed(db, 'topic/'))
     doc = save(doc)
     return doc
 

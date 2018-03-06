@@ -6,7 +6,6 @@
   "dependencies": {
     "antd": "^3.2.3",
     "history": "^4.7.2",
-    "io-ts": "^1.0.5",
     "pouch-redux-middleware": "git+ssh://git@github.com/micimize/pouch-redux-middleware.git",
     "pouchdb": "^6.3.4",
     "pouchdb-redux-helper": "^0.11.0",
