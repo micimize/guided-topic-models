@@ -1,5 +1,5 @@
 from .summary import summary, keywords
-from .topics import topics
+from .topics import sentence_topics
 
 def analyze(doc, topics):
     text = doc["text"]

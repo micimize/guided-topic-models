@@ -18,7 +18,7 @@ empty = {
 
 def nearest_topic(blob: str, topics=[]):
     tokens = blob.split()
-    chosen = empty 
+    chosen = None 
     for topic in topics:
         words = topic.get('explicit', {})
         topic_similarity = similarity(tokens, **words)
